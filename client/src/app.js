@@ -1,2 +1,2 @@
-import './styles/main.scss';
-import * as bootstrap from 'bootstrap'
+import './assets/scss/main.scss';
+import './assets/scss/form.scss';
