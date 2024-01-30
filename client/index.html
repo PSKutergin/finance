@@ -44,7 +44,7 @@
                   <path
                     d="M9.9983 5.08325C9.99943 5.05564 10 5.02789 10 5C10 3.89543 9.10457 3 8 3C6.89543 3 6 3.89543 6 5C6 5.6845 6.34387 6.28869 6.86829 6.64924C7.71486 5.84504 8.79591 5.28533 9.9983 5.08325Z" />
                 </svg>
-                <span class="sidebar__link-text">Доходы & Расходы</span>
+                <span class="sidebar__link-text">Доходы &amp; Расходы</span>
               </a>
             </li>
             <li class="sidebar__item sidebar__item--categories" id="categories">
@@ -76,7 +76,34 @@
         </section>
       </aside>
 
-      <main class="content"></main>
+      <main class="content">
+        <section class="container">
+          <h1 class="content__title">Главная</h1>
+          <nav class="content__nav-wrapper">
+            <ul class="content__nav">
+              <li class="content__nav-item active">Сегодня</li>
+              <li class="content__nav-item">Неделя</li>
+              <li class="content__nav-item">Месяц</li>
+              <li class="content__nav-item">Год</li>
+              <li class="content__nav-item">Все</li>
+              <li class="content__nav-item" id="date-interval">Интервал</li>
+            </ul>
+            <section class="date-interval-wrapper">
+              <section class="date-interval">
+                <label class="date-interval__label">c</label>
+                <input type="text" class="date-interval__input" placeholder="Дата">
+              </section>
+              <section class="date-interval">
+                <label class="date-interval__label">по</label>
+                <input type="text" class="date-interval__input" placeholder="Дата">
+              </section>
+            </section>
+
+            <section class="content__chart"></section>
+
+          </nav>
+        </section>
+      </main>
     </section>
 
   </div>
