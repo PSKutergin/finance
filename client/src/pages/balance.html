@@ -1,0 +1,66 @@
+<section class="container">
+    <h1 class="content__title">Доходы и расходы</h1>
+    <section class="content__buttons-wrapper__add">
+        <button type="submit" class="content__button-income">Создать доход</button>
+        <button type="button" class="content__button-expense">Создать расход</button>
+    </section>
+    <nav class="content__nav-wrapper">
+        <ul class="content__nav">
+            <li class="content__nav-item active">Сегодня</li>
+            <li class="content__nav-item">Неделя</li>
+            <li class="content__nav-item">Месяц</li>
+            <li class="content__nav-item">Год</li>
+            <li class="content__nav-item">Все</li>
+            <li class="content__nav-item" id="dateIntervalBtn">Интервал</li>
+        </ul>
+        <section class="date-interval-wrapper" id="dateInterval">
+            <section class="date-interval">
+                <label class="date-interval__label">c</label>
+                <input type="text" class="date-interval__input" placeholder="Дата">
+            </section>
+            <section class="date-interval">
+                <label class="date-interval__label">по</label>
+                <input type="text" class="date-interval__input" placeholder="Дата">
+            </section>
+        </section>
+    </nav>
+    <table class="content__table">
+        <thead class="content__table-head">
+            <tr>
+                <th class="content__table-head-item">№ операции</th>
+                <th class="content__table-head-item">Тип</th>
+                <th class="content__table-head-item">Категория</th>
+                <th class="content__table-head-item">Сумма</th>
+                <th class="content__table-head-item">Дата</th>
+                <th class="content__table-head-item">Комментарий</th>
+                <th class="content__table-head-item"></th>
+            </tr>
+        </thead>
+        <tbody class="content__table-body">
+            <tr>
+                <td class="content__table-body-item">1</td>
+                <td class="content__table-body-item" style="color: #198754;">доход</td>
+                <td class="content__table-body-item">зарплата</td>
+                <td class="content__table-body-item">500$</td>
+                <td class="content__table-body-item">11.09.2022</td>
+                <td class="content__table-body-item"></td>
+                <td class="content__table-body-item">
+                    <button class="btn-delete"><img src="./src/assets/images/delete.svg" alt="delete"></button>
+                    <button class="btn-edit"><img src="./src/assets/images/edit.svg" alt="edit"></button>
+                </td>
+            </tr>
+            <tr>
+                <td class="content__table-body-item">2</td>
+                <td class="content__table-body-item" style="color: #dc3545;">расход</td>
+                <td class="content__table-body-item">жильё</td>
+                <td class="content__table-body-item">2 500$</td>
+                <td class="content__table-body-item">12.09.2022</td>
+                <td class="content__table-body-item"></td>
+                <td class="content__table-body-item">
+                    <button class="btn-delete"><img src="./src/assets/images/delete.svg" alt="delete"></button>
+                    <button class="btn-edit"><img src="./src/assets/images/edit.svg" alt="edit"></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>

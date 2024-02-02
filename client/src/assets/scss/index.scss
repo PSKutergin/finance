@@ -15,6 +15,14 @@
   src: url("../fonts/roboto-v30-latin-500.woff2") format("woff2");
 }
 
+@font-face {
+  font-display: swap;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/roboto-v30-latin-700.woff2") format("woff2");
+}
+
 *,
 *::after,
 *::before {
@@ -28,6 +36,7 @@ body {
   font-family: "Roboto", sans-serif;
   color: black;
   font-size: 12px;
+  font-weight: 400;
   background: #fff;
   min-width: 320px;
   height: 100vh;
@@ -48,6 +57,12 @@ button {
 
 ul {
   list-style: none;
+}
+
+table,
+th,
+td {
+  border-collapse: collapse;
 }
 
 #app {

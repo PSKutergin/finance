@@ -1,5 +1,4 @@
 .content__categories {
-  margin-top: 40px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
@@ -105,7 +104,9 @@
   }
 
   &__btn-delete {
+    transition: all 0.3s ease;
     background: #198754;
+
     &:hover {
       box-shadow: 0 0 10px #6c757d;
     }
@@ -117,6 +118,8 @@
 
   &__btn-cancel {
     background: #dc3545;
+    transition: all 0.3s ease;
+
     &:hover {
       box-shadow: 0 0 10px #6c757d;
     }
