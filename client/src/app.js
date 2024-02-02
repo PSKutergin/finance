@@ -8,6 +8,18 @@ import './assets/scss/balance.scss';
 
 import { Main } from './components/main';
 import pieChart from './components/charts';
+import { Router } from "./router.js";
 
-// pieChart();
-// new Main().init()
+class App {
+    constructor() {
+        this.router = new Router();
+        window.addEventListener('DOMContentLoaded', this.handleRouteChanging.bind(this));
+        window.addEventListener('popstate', this.handleRouteChanging.bind(this))
+    }
+
+    handleRouteChanging() {
+        this.router.openRoute();
+    }
+};
+
+(new App());
