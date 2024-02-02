@@ -1,0 +1,32 @@
+<section class="container">
+    <h1 class="content__title">Главная</h1>
+    <nav class="content__nav-wrapper">
+        <ul class="content__nav">
+            <li class="content__nav-item active">Сегодня</li>
+            <li class="content__nav-item">Неделя</li>
+            <li class="content__nav-item">Месяц</li>
+            <li class="content__nav-item">Год</li>
+            <li class="content__nav-item">Все</li>
+            <li class="content__nav-item" id="dateIntervalBtn">Интервал</li>
+        </ul>
+        <section class="date-interval-wrapper" id="dateInterval">
+            <section class="date-interval">
+                <label class="date-interval__label">c</label>
+                <input type="text" class="date-interval__input" placeholder="Дата">
+            </section>
+            <section class="date-interval">
+                <label class="date-interval__label">по</label>
+                <input type="text" class="date-interval__input" placeholder="Дата">
+            </section>
+        </section>
+    </nav>
+    <section class="content__chart">
+        <section class="chart">
+            <canvas id="pie-chart-one" class="pie-chart"></canvas>
+        </section>
+        <div class="content__chart-divider"></div>
+        <section class="chart">
+            <canvas id="pie-chart-two" class="pie-chart"></canvas>
+        </section>
+    </section>
+</section>

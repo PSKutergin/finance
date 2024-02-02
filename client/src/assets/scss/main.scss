@@ -22,6 +22,7 @@
     text-align: center;
     color: #6c757d;
     font-size: 16px;
+    line-height: 1.1;
     font-weight: 500;
     letter-spacing: 0.457px;
     cursor: pointer;
@@ -39,8 +40,12 @@
 }
 
 .date-interval-wrapper {
-  display: flex;
   gap: 15px;
+  display: none;
+
+  &.open {
+    display: flex;
+  }
 }
 
 .date-interval {
@@ -56,7 +61,7 @@
 
   &__input {
     width: 95px;
-    padding: 9px 12px;
+    padding: 9px 5px;
     outline: none;
     border: none;
     text-align: center;
@@ -69,4 +74,74 @@
       text-decoration-line: underline;
     }
   }
+}
+
+.content__chart {
+  margin-top: 140px;
+  max-width: 1043px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.chart {
+  width: 467px;
+  height: 467px;
+}
+
+.pie-chart {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
+}
+
+.content__chart-divider {
+  position: absolute;
+  width: 1px;
+  height: 450px;
+  background: #d9d9d9;
+  left: 50%;
+  bottom: -40px;
+}
+
+@media (max-width: 1220px) {
+  .content {
+    &__nav-wrapper {
+      gap: 10px;
+    }
+
+    &__nav-item {
+      width: 80px;
+      padding: 9px;
+      font-size: 12px;
+      line-height: 1;
+
+      &.active {
+        background: #6c757d;
+        color: #fff;
+      }
+
+      &:hover {
+        box-shadow: 0 0 10px #6c757d;
+      }
+    }
+  }
+
+  .date-interval-wrapper {
+    gap: 8px;
+  }
+
+  .date-interval {
+    &__label {
+      font-size: 12px;
+    }
+
+    &__input {
+      width: 80px;
+      font-size: 12px;
+    }
+  }
+}
+
+@media (max-width: 1050px) {
 }

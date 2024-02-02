@@ -78,30 +78,51 @@
 
       <main class="content">
         <section class="container">
-          <h1 class="content__title">Главная</h1>
-          <nav class="content__nav-wrapper">
-            <ul class="content__nav">
-              <li class="content__nav-item active">Сегодня</li>
-              <li class="content__nav-item">Неделя</li>
-              <li class="content__nav-item">Месяц</li>
-              <li class="content__nav-item">Год</li>
-              <li class="content__nav-item">Все</li>
-              <li class="content__nav-item" id="date-interval">Интервал</li>
-            </ul>
-            <section class="date-interval-wrapper">
-              <section class="date-interval">
-                <label class="date-interval__label">c</label>
-                <input type="text" class="date-interval__input" placeholder="Дата">
+          <h1 class="content__title">Доходы</h1>
+          <ul class="content__categories">
+            <li class="content__categories-item">
+              <h3 class="content__categories-item-title">Депозиты</h3>
+              <section class="content__categories-item-btn-wrapper">
+                <button class="content__categories-item-btn edit">Редактировать</button>
+                <button class="content__categories-item-btn delete">Удалить</button>
               </section>
-              <section class="date-interval">
-                <label class="date-interval__label">по</label>
-                <input type="text" class="date-interval__input" placeholder="Дата">
+            </li>
+            <li class="content__categories-item">
+              <h3 class="content__categories-item-title">Зарплата</h3>
+              <section class="content__categories-item-btn-wrapper">
+                <button class="content__categories-item-btn edit">Редактировать</button>
+                <button class="content__categories-item-btn delete">Удалить</button>
+              </section>
+            </li>
+            <li class="content__categories-item">
+              <h3 class="content__categories-item-title">Сбережения</h3>
+              <section class="content__categories-item-btn-wrapper">
+                <button class="content__categories-item-btn edit">Редактировать</button>
+                <button class="content__categories-item-btn delete">Удалить</button>
+              </section>
+            </li>
+            <li class="content__categories-item">
+              <h3 class="content__categories-item-title">Инвестиции</h3>
+              <section class="content__categories-item-btn-wrapper">
+                <button class="content__categories-item-btn edit">Редактировать</button>
+                <button class="content__categories-item-btn delete">Удалить</button>
+              </section>
+            </li>
+            <li class="content__categories-item new-item">
+              <span>+</span>
+            </li>
+          </ul>
+
+          <section class="content__popup">
+            <section class="popup">
+              <p class="popup__text">Вы действительно хотите удалить категорию? Связанные доходы будут удалены навсегда.
+              </p>
+              <section class="popup__btn-wrapper">
+                <button class="popup__btn-delete">Да, удалить</button>
+                <button class="popup__btn-cancel">Не удалять</button>
               </section>
             </section>
-
-            <section class="content__chart"></section>
-
-          </nav>
+          </section>
         </section>
       </main>
     </section>
