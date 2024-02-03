@@ -27,16 +27,20 @@ export class Auth {
     }
 
     static login({ email, password }) {
+        this.rememberElement = document.getElementById('remember');
+
         const userList = this.getUserList();
         if (!userList) {
-            return 'No user list';
+            return { success: false, error: 'Указаный пользователь не зарегистрирован' };
         } else {
             if (!userList.some(item => item.email === email && item.password === password)) {
-                return 'Wrong email or password';
+                return { success: false, error: 'Неверный логин или пароль' };
             }
         }
-        this.setUserInfo(user);
-        return true;
+        this.rememberElement.checked ?
+            this.setUserInfo({ email, password, remember: true }) :
+            this.setUserInfo({ email, password });
+        return { success: true };
     }
 
     static signup({ email, password, fullName }) {
@@ -46,12 +50,12 @@ export class Auth {
             this.setUserList([{ email, password, fullName }]);
         } else {
             if (userList.some(item => item.email === email)) {
-                return false;
+                return { success: false, error: 'Пользователь с таким email уже зарегистрирован' };
             }
             userList.push({ email, password, fullName });
             this.setUserList(userList);
         }
-        return true;
+        return { success: true };
     }
 
     static logout() {

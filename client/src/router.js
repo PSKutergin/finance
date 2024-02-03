@@ -1,4 +1,5 @@
 import { Auth } from './services/auth.js';
+import { Form } from './components/form.js';
 
 export class Router {
     appElement = null;
@@ -67,7 +68,7 @@ export class Router {
         ]
     }
 
-    openRoute() {
+    async openRoute() {
         const urlRoute = window.location.hash.split('?')[0];
 
         if (urlRoute === '#/logout') {
@@ -90,25 +91,30 @@ export class Router {
         }
 
         if (userInfo) {
-            this.fetchApp(this.routes.find(item => item.route === '#/'));
+            this.fetchApp(this.routes.find(item => item.route === '#/'), newRoute);
             this.fetchPages(newRoute);
-            newRoute.load();
         } else {
             window.location.hash = '#/login';
         }
     }
 
-    authPages() {
+    fetchApp(route, internaiRoute = null) {
+        fetch(route.template).then(async (res) => {
+            this.appElement.innerHTML = await res.text()
+            route.load();
 
-    }
-
-    fetchApp(route) {
-        fetch(route.template).then(async (res) => this.appElement.innerHTML = await res.text())
+            if (internaiRoute) {
+                this.fetchPages(internaiRoute);
+            }
+        })
     }
 
     fetchPages(route) {
         this.contentElement = document.getElementById('content');
-        fetch(route.template).then(async (res) => this.contentElement.innerHTML = await res.text())
+        fetch(route.template).then(async (res) => {
+            this.contentElement.innerHTML = await res.text()
+            route.load();
+        })
     }
 
 

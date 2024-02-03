@@ -45,6 +45,11 @@
   display: flex;
   align-items: center;
   gap: 13px;
+
+  &.error {
+    border-color: #dc3545;
+    background-color: #dc35451a;
+  }
 }
 
 .form__input {
@@ -54,6 +59,7 @@
   font-size: 15px;
   line-height: 24px;
   padding-right: 13px;
+  background: transparent;
 
   &::placeholder {
     color: #6c757d;
@@ -90,11 +96,33 @@
   font-size: 15px;
   font-weight: 500;
 }
+
 .form__text {
   display: flex;
   gap: 10px;
 }
+
 .form__link {
   color: #0d6efd;
   border-bottom: #0d6efd 1px solid;
+}
+
+.error-message {
+  width: 300px;
+  text-align: center;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 10px;
+  padding: 15px 16px;
+  color: #dc3545;
+  font-size: 15px;
+  line-height: 23px;
+  background: #f8d7da;
+  transform: translateX(200%);
+  transition: all 1s ease;
+}
+
+.error-message.active {
+  transform: translateX(0);
 }
