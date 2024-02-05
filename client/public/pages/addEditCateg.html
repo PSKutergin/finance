@@ -2,7 +2,11 @@
     <h1 class="content__title">Создание дохода/расхода</h1>
     <form class="content__form">
         <section class="content__input-wrapper">
-            <input type="text" class="content__input" name="type" placeholder="Тип...">
+            <select name="type" class="content__select">
+                <option class="content__select_option" value="" selected>Тип...</option>
+                <option value="income">Доход</option>
+                <option value="expense">Расход</option>
+            </select>
             <input type="text" class="content__input" name="category" placeholder="Категория...">
             <input type="text" class="content__input" name="sum" placeholder="Сумма в $...">
             <input type="text" class="content__input" name="date" placeholder="Дата...">

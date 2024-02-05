@@ -1,6 +1,12 @@
+import pieChart from './charts';
+
 export class Main {
     filterBtns = null
     dateIntervalContainer = null
+
+    constructor() {
+        this.init();
+    }
     init() {
         this.filterBtns = document.querySelectorAll('.content__nav-item');
         this.dateIntervalContainer = document.getElementById('dateInterval');
@@ -17,6 +23,8 @@ export class Main {
                 e.target.id === 'dateIntervalBtn' ? this.isOpenDateIntervalContainer() : this.isCloseDateIntervalContainer();
             })
         })
+
+        pieChart();
     }
 
     isOpenDateIntervalContainer() {

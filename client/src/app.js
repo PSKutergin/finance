@@ -6,8 +6,6 @@ import './assets/scss/categories.scss';
 import './assets/scss/addEdit.scss';
 import './assets/scss/balance.scss';
 
-import { Main } from './components/main';
-import pieChart from './components/charts';
 import { Router } from "./router.js";
 
 class App {

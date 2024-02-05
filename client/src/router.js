@@ -1,5 +1,7 @@
 import { Auth } from './services/auth.js';
 import { Form } from './components/form.js';
+import { Sidebar } from './components/sidebar.js';
+import { Main } from './components/main.js';
 
 export class Router {
     appElement = null;
@@ -14,7 +16,9 @@ export class Router {
             {
                 route: '#/',
                 template: 'pages/layout.html',
-                load: () => { }
+                load: () => {
+                    new Sidebar(window.location.hash);
+                }
             },
             {
                 route: '#/signup',
@@ -38,31 +42,38 @@ export class Router {
                 }
             },
             {
-                route: '#/categories',
-                template: 'pages/categories.html',
+                route: '#/categories-income',
+                template: 'pages/categories-income.html',
                 load: () => {
-                    new Categories();
+                    // new Categories();
+                }
+            },
+            {
+                route: '#/categories-expense',
+                template: 'pages/categories-expense.html',
+                load: () => {
+                    // new Categories();
                 }
             },
             {
                 route: '#/add-edit-type',
                 template: 'pages/addEditType.html',
                 load: () => {
-                    new AddEditType();
+                    // new AddEditType();
                 }
             },
             {
-                route: '#/add-edit-category',
+                route: '#/add-edit-categories',
                 template: 'pages/addEditCateg.html',
                 load: () => {
-                    new AddEditCateg();
+                    // new AddEditCateg();
                 }
             },
             {
                 route: '#/balance',
                 template: 'pages/balance.html',
                 load: () => {
-                    new Balance();
+                    // new Balance();
                 }
             },
         ]
@@ -98,19 +109,21 @@ export class Router {
         }
     }
 
-    fetchApp(route, internaiRoute = null) {
+    fetchApp(route, internalRoute = null) {
         fetch(route.template).then(async (res) => {
             this.appElement.innerHTML = await res.text()
             route.load();
-
-            if (internaiRoute) {
-                this.fetchPages(internaiRoute);
+            if (internalRoute) {
+                this.fetchPages(internalRoute);
             }
         })
     }
 
     fetchPages(route) {
         this.contentElement = document.getElementById('content');
+        if (!this.contentElement) {
+            return;
+        }
         fetch(route.template).then(async (res) => {
             this.contentElement.innerHTML = await res.text()
             route.load();
