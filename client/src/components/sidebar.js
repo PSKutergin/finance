@@ -12,24 +12,14 @@ export class Sidebar {
         this.categoriesItem = document.querySelector('.sidebar__item--categories');
 
         this.navItemsSub.forEach(item => {
-            // if (item.dataset.hash === this.page) {
-            //     item.classList.add('active');
-            // } else {
-            //     item.classList.remove('active');
-            // }
-
-            if (item.classList.contains('active')) {
-                this.categoriesItem.setAttribute('data-hash', item.dataset.hash);
-            }
+            if (item.classList.contains('active')) this.categoriesItem.setAttribute('data-hash', item.dataset.hash);
+            if (item.dataset.hash === this.page) item.classList.add('active');
+            else item.classList.remove('active');
         })
 
         this.navItems.forEach(item => {
-            console.log(this.page);
-            if (item.dataset.hash === this.page) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
+            if (item.dataset.hash === this.page) item.classList.add('active');
+            else item.classList.remove('active');
         });
 
         if (this.page.includes('categories')) {
@@ -42,8 +32,10 @@ export class Sidebar {
         this.navList.addEventListener('click', (e) => {
             if (e.target.closest('.sidebar__item')) {
                 if (e.target.closest('.sidebar__item--categories')) {
-                    e.target.classList.add('active');
+                    e.target.closest('.sidebar__item--categories').classList.add('active');
                     this.navSubList.classList.add('open');
+                    const link = e.target.closest('.sidebar__item--categories');
+                    window.location.hash = `#/${link.dataset.hash}`
                 } else {
                     const link = e.target.closest('.sidebar__item');
                     window.location.hash = `#/${link.dataset.hash}`
