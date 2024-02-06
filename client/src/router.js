@@ -2,6 +2,10 @@ import { Auth } from './services/auth.js';
 import { Form } from './components/form.js';
 import { Sidebar } from './components/sidebar.js';
 import { Main } from './components/main.js';
+import { Balance } from './components/balance.js';
+import { Categories } from './components/categories.js';
+import { AddEditType } from './components/addEditType.js';
+import { AddEditCateg } from './components/addEditCateg.js';
 
 export class Router {
     appElement = null;
@@ -45,35 +49,49 @@ export class Router {
                 route: '#/categories-income',
                 template: 'pages/categories-income.html',
                 load: () => {
-                    // new Categories();
+                    new Categories();
                 }
             },
             {
                 route: '#/categories-expense',
                 template: 'pages/categories-expense.html',
                 load: () => {
-                    // new Categories();
+                    new Categories();
                 }
             },
             {
-                route: '#/add-edit-type',
+                route: '#/new-type',
                 template: 'pages/addEditType.html',
                 load: () => {
-                    // new AddEditType();
+                    new AddEditType('new');
                 }
             },
             {
-                route: '#/add-edit-categories',
+                route: '#/edit-type',
+                template: 'pages/addEditType.html',
+                load: () => {
+                    new AddEditType('edit');
+                }
+            },
+            {
+                route: '#/new-categories',
                 template: 'pages/addEditCateg.html',
                 load: () => {
-                    // new AddEditCateg();
+                    new AddEditCateg('new');
+                }
+            },
+            {
+                route: '#/edit-categories',
+                template: 'pages/addEditCateg.html',
+                load: () => {
+                    new AddEditCateg('edit');
                 }
             },
             {
                 route: '#/balance',
                 template: 'pages/balance.html',
                 load: () => {
-                    // new Balance();
+                    new Balance();
                 }
             },
         ]
