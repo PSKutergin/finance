@@ -1,64 +1,35 @@
+import instance from "../api/interceptor";
+
 export class Auth {
-    static userList = 'userList';
-    static userInfo = 'userInfo';
-
-    static setUserInfo(info) {
-        localStorage.setItem(this.userInfo, JSON.stringify(info));
+    static accessTokenKey = 'accessToken';
+    static refreshTokenKey = 'refreshToken';
+    static async login({ email, password, rememberMe }) {
+        return instance.post('api/login', { email, password, rememberMe })
     }
 
-    static getUserInfo() {
-        const userInfo = localStorage.getItem(this.userInfo);
-        if (userInfo) {
-            return JSON.parse(userInfo);
-        }
-        return null;
+    static async signup({ name, lastName, email, password, passwordRepeat }) {
+        return instance.post('api/signup', { name, lastName, email, password, passwordRepeat })
     }
 
-    static getUserList() {
-        const userList = localStorage.getItem(this.userList);
-        if (userList) {
-            return JSON.parse(userList);
-        }
-        return null;
+    static async refresh(refreshToken) {
+        return instance.post('api/refresh', { refreshToken })
     }
 
-    static setUserList(userList) {
-        localStorage.setItem(this.userList, JSON.stringify(userList));
+    static async logout(refreshToken) {
+        return instance.post('api/logout', { refreshToken })
     }
 
-    static login({ email, password }) {
-        this.rememberElement = document.getElementById('remember');
-
-        const userList = this.getUserList();
-        if (!userList) {
-            return { success: false, error: 'Указаный пользователь не зарегистрирован' };
-        } else {
-            if (!userList.some(item => item.email === email && item.password === password)) {
-                return { success: false, error: 'Неверный логин или пароль' };
-            }
-        }
-        this.rememberElement.checked ?
-            this.setUserInfo({ email, password, remember: true }) :
-            this.setUserInfo({ email, password });
-        return { success: true };
+    static getToken = (nameToken) => {
+        return localStorage.getItem(nameToken) ? localStorage.getItem(nameToken) : null
     }
 
-    static signup({ email, password, fullName }) {
-        const userList = this.getUserList();
-
-        if (!userList) {
-            this.setUserList([{ email, password, fullName }]);
-        } else {
-            if (userList.some(item => item.email === email)) {
-                return { success: false, error: 'Пользователь с таким email уже зарегистрирован' };
-            }
-            userList.push({ email, password, fullName });
-            this.setUserList(userList);
-        }
-        return { success: true };
+    static setTokens = (accessToken, refreshToken) => {
+        localStorage.setItem(this.accessTokenKey, accessToken);
+        localStorage.setItem(this.refreshTokenKey, refreshToken);
     }
 
-    static logout() {
-        localStorage.removeItem(this.userInfo);
+    static removeTokens = () => {
+        localStorage.removeItem(this.accessTokenKey);
+        localStorage.removeItem(this.refreshTokenKey);
     }
 }

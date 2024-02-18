@@ -1,4 +1,5 @@
-import { CurrentType } from "../store/currentType";
+import CurrentType from "../store/currentType";
+import User from "../store/user";
 
 export class Sidebar {
     constructor(page) {
@@ -6,26 +7,25 @@ export class Sidebar {
         this.init();
     }
 
-    init() {
+    async init() {
+        this.layout = document.querySelector('.layout');
         this.navList = document.querySelector('.sidebar__list');
         this.navSubList = document.querySelector('.sidebar__sublist');
         this.navItems = document.querySelectorAll('.sidebar__item');
         this.navItemsSub = document.querySelectorAll('.sidebar__sublist-item');
         this.categoriesItem = document.querySelector('.sidebar__item--categories');
+        this.btnLogOut = document.querySelector('.sidebar__user-logout');
+
+        this.userName = document.getElementById('userName');
+        this.userName.textContent = User.getFullName();
 
         const currentType = CurrentType.getType();
-
-        console.log(currentType);
 
         this.navItemsSub.forEach(item => {
             if (item.dataset.hash === this.page) item.classList.add('active');
             else item.classList.remove('active');
 
-            if (item.classList.contains('active')) {
-                this.categoriesItem.setAttribute('data-hash', item.dataset.hash);
-            } else {
-                this.categoriesItem.setAttribute('data-hash', this.navItemsSub[0].dataset.hash);
-            }
+            this.categoriesItem.setAttribute('data-hash', `categories-${currentType}`);
         })
 
         this.navItemsSub.forEach(item => {
@@ -50,6 +50,7 @@ export class Sidebar {
                 if (e.target.closest('.sidebar__item--categories')) {
                     e.target.closest('.sidebar__item--categories').classList.add('active');
                     this.navSubList.classList.add('open');
+
                     const link = e.target.closest('.sidebar__item--categories');
                     window.location.hash = `#/${link.dataset.hash}`
                 } else {
@@ -62,6 +63,17 @@ export class Sidebar {
                 const link = e.target.closest('.sidebar__sublist-item');
                 CurrentType.setType(link.dataset.hash.split('-')[1]);
                 window.location.hash = `#/${link.dataset.hash}`
+            }
+        })
+
+        this.layout.addEventListener('click', (e) => {
+            if (e.target.closest('.sidebar__user')) {
+                this.btnLogOut.classList.toggle('hidden');
+            }
+
+            if (e.target.closest('.sidebar__user-logout')) {
+                User.logout();
+                window.location.hash = '#/login';
             }
         })
     }
