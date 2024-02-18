@@ -1,16 +1,16 @@
 import Chart from 'chart.js/auto';
 
-const pieChart = () => {
+const pieChart = (element, title, categories, values) => {
 
     const data = {
-        labels: ["Red", "Orange", "Yellow", "Green", "Blue"],
+        labels: categories,
         datasets: [{
             backgroundColor: ["#dc3545", "#fd7e14", "#ffc107", "#20c997", "#0d6efd"],
-            data: [2478, 5267, 734, 784, 433]
+            data: values
         }]
     }
 
-    const setConfig = (title, data) => {
+    const setConfig = (data) => {
         const config = {
             type: 'pie',
             data: data,
@@ -55,8 +55,7 @@ const pieChart = () => {
         return config
     };
 
-    const incomeChart = new Chart(document.getElementById("pie-chart-one"), setConfig('Доходы', data))
-    const expensesChart = new Chart(document.getElementById("pie-chart-two"), setConfig('Расходы', data))
+    new Chart(element, setConfig(data))
 }
 
 export default pieChart
