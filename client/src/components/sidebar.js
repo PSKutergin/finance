@@ -1,5 +1,6 @@
 import CurrentType from "../store/currentType";
 import User from "../store/user";
+import { Balance } from '../services/balance'
 
 export class Sidebar {
     constructor(page) {
@@ -14,6 +15,7 @@ export class Sidebar {
         this.navItems = document.querySelectorAll('.sidebar__item');
         this.navItemsSub = document.querySelectorAll('.sidebar__sublist-item');
         this.categoriesItem = document.querySelector('.sidebar__item--categories');
+        this.balanceElem = document.getElementById('balance-value')
         this.btnLogOut = document.querySelector('.sidebar__user-logout');
 
         this.userName = document.getElementById('userName');
@@ -76,5 +78,17 @@ export class Sidebar {
                 window.location.hash = '#/login';
             }
         })
+
+        this.getBalanceFromApi();
+    }
+
+    async getBalanceFromApi() {
+        try {
+            const res = await Balance.getBalance()
+
+            this.balanceElem.textContent = `${res.data.balance}$`
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

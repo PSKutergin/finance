@@ -6,6 +6,6 @@ export class Balance {
     }
 
     static async editBalance(newBalance) {
-        return instance.put(`api/balance/`, { newBalance })
+        return instance.put(`api/balance`, { newBalance })
     }
 }

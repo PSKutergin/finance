@@ -17,7 +17,7 @@ instance.interceptors.request.use((config) => {
     const token = Auth.getToken(Auth.accessTokenKey);
 
     if (config.headers && token) {
-        config.headers.Authorization = `Bearer ${token}`
+        config.headers['x-auth-token'] = token
     }
     return config
 })
@@ -37,7 +37,7 @@ instance.interceptors.response.use(
                 // Повторный запрос с обновленными токенами
                 const token = Auth.getToken(Auth.accessTokenKey);
                 if (token) {
-                    originalRequest.headers.Authorization = `Bearer ${token}`;
+                    originalRequest.headers['x-auth-token'] = token;
                     return axios(originalRequest);
                 }
             } catch (refreshError) {
