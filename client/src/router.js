@@ -48,14 +48,14 @@ export class Router {
             },
             {
                 route: '#/categories-income',
-                template: 'pages/categories-income.html',
+                template: 'pages/categories.html',
                 load: () => {
                     new Categories();
                 }
             },
             {
                 route: '#/categories-expense',
-                template: 'pages/categories-expense.html',
+                template: 'pages/categories.html',
                 load: () => {
                     new Categories();
                 }
