@@ -1,4 +1,4 @@
-import CurrentType from "../store/currentType";
+// import CurrentType from "../store/currentType";
 import { Category } from "../services/category";
 
 export class Categories {
@@ -6,16 +6,14 @@ export class Categories {
         this.init();
     }
     init() {
-        this.type = CurrentType.getType()
+        this.type = window.currentType.getType()
         this.titleCategory = document.querySelector('.content__title');
         this.contentCategories = document.querySelector('.content__categories');
         this.popup = document.querySelector('.content__popup');
 
         if (this.popup) {
             this.popup.addEventListener('click', (e) => {
-                if (e.target.closest('.popup__btn-cancel')) {
-                    this.popup.classList.remove('open');
-                }
+                if (e.target.closest('.popup__btn-cancel')) this.popup.classList.remove('open');
             })
         }
 
@@ -25,9 +23,9 @@ export class Categories {
     async getCategoriesFromApi() {
         try {
             if (this.titleCategory && this.contentCategories) {
-                const res = await Category.getCategories(this.type)
-
-                this.renderCategories(res.data)
+                await Category.getCategories(this.type)
+                    .then(res => this.renderCategories(res.data))
+                    .catch(error => console.log(error))
             }
         } catch (error) {
             console.log(error);
@@ -68,21 +66,22 @@ export class Categories {
         this.editBtns = document.querySelectorAll('.edit');
         this.deleteBtns = document.querySelectorAll('.delete');
 
-        this.editBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                window.location.hash = `#/edit-categories`
+        if (this.createBtn && this.editBtns && this.deleteBtns) {
+            this.editBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = e.target.closest('.content__categories-item').dataset.id
+                    window.location.hash = `#/edit-categories/${id}`
+                })
             })
-        })
 
-        this.deleteBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                this.popup.classList.add('open');
+            this.deleteBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    this.popup.classList.add('open');
+                })
             })
-        })
 
-        if (this.createBtn) {
             this.createBtn.addEventListener('click', (e) => {
-                window.location.hash = `#/new-categories`
+                window.location.hash = '#/new-categories'
             })
         }
     }

@@ -1,4 +1,4 @@
-import CurrentType from '../store/currentType';
+// import CurrentType from '../store/currentType';
 
 export class Balance {
     constructor() {
@@ -14,13 +14,13 @@ export class Balance {
 
         if (this.createIncomeBtn && this.createExpenseBtn) {
             this.createIncomeBtn.addEventListener('click', () => {
-                CurrentType.setType('income');
-                window.location.hash = `#/new-type`
+                window.currentType.setType('income');
+                window.location.hash = `#/new-operation`
             })
 
             this.createExpenseBtn.addEventListener('click', () => {
-                CurrentType.setType('expense');
-                window.location.hash = `#/new-type`
+                window.currentType.setType('expense');
+                window.location.hash = `#/new-operation`
             })
         }
 
@@ -32,7 +32,7 @@ export class Balance {
 
         this.editCategoriesBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
-                window.location.hash = `#/edit-categories`
+                window.location.hash = `#/edit-operation/1`
             })
         })
 

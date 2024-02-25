@@ -1,17 +1,18 @@
-import CurrentType from '../store/currentType';
+import { Category } from '../services/category';
 
-export class AddEditCateg {
+export class AddEditOperations {
     constructor(mode) {
         this.mode = mode;
         this.title = '';
         this.textBtn = '';
+        this.currentType = null;
         this.contentTitle = null;
         this.contentBtn = null;
         this.init();
     }
 
     init() {
-        this.currentType = CurrentType.getType();
+        this.currentType = window.currentType.getType();
         this.contentTitle = document.querySelector('.content__title');
         this.contentBtn = document.querySelector('.content__button');
 

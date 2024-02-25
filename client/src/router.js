@@ -5,8 +5,8 @@ import { Sidebar } from './components/sidebar.js';
 import { Main } from './components/main.js';
 import { Balance } from './components/balance.js';
 import { Categories } from './components/categories.js';
-import { AddEditType } from './components/addEditType.js';
-import { AddEditCateg } from './components/addEditCateg.js';
+import { AddEditCategories } from './components/addEditCategories.js';
+import { AddEditOperations } from './components/addEditOperations.js';
 
 export class Router {
     appElement = null;
@@ -61,31 +61,31 @@ export class Router {
                 }
             },
             {
-                route: '#/new-type',
-                template: 'pages/addEditType.html',
-                load: () => {
-                    new AddEditType('new');
-                }
-            },
-            {
-                route: '#/edit-type',
-                template: 'pages/addEditType.html',
-                load: () => {
-                    new AddEditType('edit');
-                }
-            },
-            {
                 route: '#/new-categories',
-                template: 'pages/addEditCateg.html',
+                template: 'pages/addEditCategories.html',
                 load: () => {
-                    new AddEditCateg('new');
+                    new AddEditCategories('new');
                 }
             },
             {
-                route: '#/edit-categories',
-                template: 'pages/addEditCateg.html',
+                route: '#/edit-categories/:id',
+                template: 'pages/addEditCategories.html',
                 load: () => {
-                    new AddEditCateg('edit');
+                    new AddEditCategories('edit');
+                }
+            },
+            {
+                route: '#/new-operation',
+                template: 'pages/addEditOperations.html',
+                load: () => {
+                    new AddEditOperations('new');
+                }
+            },
+            {
+                route: `#/edit-operation/:id`,
+                template: 'pages/addEditOperations.html',
+                load: () => {
+                    new AddEditOperations('edit');
                 }
             },
             {
@@ -100,8 +100,13 @@ export class Router {
 
     async openRoute() {
         const urlRoute = window.location.hash.split('?')[0];
-        const newRoute = this.routes.find(item => item.route === urlRoute);
+        const newRoute = this.routes.find(item => {
+            const routePattern = item.route.replace(/:[^\s/]+/g, '[^\\s/]+');
+            return new RegExp(`^${routePattern}$`).test(urlRoute);
+        });
         const token = Auth.getToken(Auth.accessTokenKey);
+
+        console.log(urlRoute);
 
         if (!newRoute || urlRoute === '#/') {
             window.location.hash = '#/login';
@@ -147,6 +152,4 @@ export class Router {
         this.contentElement.innerHTML = await res.text()
         await route.load();
     }
-
-
 }
