@@ -1,8 +1,12 @@
-// import CurrentType from "../store/currentType";
 import { Category } from "../services/category";
 
 export class Categories {
     constructor() {
+        this.idCategory = null;
+        this.type = null;
+        this.titleCategory = null;
+        this.contentCategories = null;
+        this.popup = null;
         this.init();
     }
     init() {
@@ -14,6 +18,11 @@ export class Categories {
         if (this.popup) {
             this.popup.addEventListener('click', (e) => {
                 if (e.target.closest('.popup__btn-cancel')) this.popup.classList.remove('open');
+
+                if (e.target.closest('.popup__btn-delete')) {
+                    this.deleteCategory();
+                    this.popup.classList.remove('open');
+                }
             })
         }
 
@@ -76,13 +85,25 @@ export class Categories {
 
             this.deleteBtns.forEach(btn => {
                 btn.addEventListener('click', (e) => {
+                    this.idCategory = e.target.closest('.content__categories-item').dataset.id
                     this.popup.classList.add('open');
+
+                    console.log(this.idCategory);
                 })
             })
 
             this.createBtn.addEventListener('click', (e) => {
                 window.location.hash = '#/new-categories'
             })
+        }
+    }
+
+    async deleteCategory() {
+        try {
+            await Category.deleteCategory(this.type, this.idCategory)
+            this.getCategoriesFromApi();
+        } catch (error) {
+            console.log(error);
         }
     }
 }

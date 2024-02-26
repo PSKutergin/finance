@@ -9,6 +9,7 @@ export class Main {
         this.init();
     }
     init() {
+        this.popup = document.querySelector('.content__popup');
         this.filterBtns = document.querySelectorAll('.content__nav-item');
         this.dateIntervalContainer = document.getElementById('dateInterval');
         this.incomeChart = document.getElementById('pie-chart-income');
