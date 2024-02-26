@@ -36,7 +36,7 @@ export class Main {
                         }
                     })
 
-                    e.target.id === 'dateIntervalBtn' ? this.isOpenDateIntervalContainer() : this.isCloseDateIntervalContainer();
+                    e.target.id === 'interval' ? this.isOpenDateIntervalContainer() : this.isCloseDateIntervalContainer();
                 })
             })
         }
