@@ -1,4 +1,4 @@
-export const formatDateToISO = (date = null) => {
+export const formatDateFromISO = (date = null) => {
     let dateObj
 
     if (date) dateObj = new Date(date);

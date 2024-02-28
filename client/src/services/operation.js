@@ -1,5 +1,5 @@
 import instance from "../api/interceptor";
-import { formatDateToISO } from '../helpers/helpers';
+import { formatDateFromISO } from '../helpers/helpers';
 
 export class Operation {
     static async getOperations(interval = 'interval', dateFrom = null, dateTo = null) {
@@ -20,9 +20,9 @@ export class Operation {
                 break;
             case 'interval':
                 if (dateFrom && dateTo) {
-                    url += `?period=interval&dateFrom=${formatDateToISO(dateFrom)}&dateTo=${formatDateToISO(dateTo)}`
+                    url += `?period=interval&dateFrom=${formatDateFromISO(dateFrom)}&dateTo=${formatDateFromISO(dateTo)}`
                 } else {
-                    url += `?period=interval&dateFrom=${formatDateToISO()}&dateTo=${formatDateToISO()}`
+                    url += `?period=interval&dateFrom=${formatDateFromISO()}&dateTo=${formatDateFromISO()}`
                 }
                 break;
         }

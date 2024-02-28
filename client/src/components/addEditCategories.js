@@ -1,5 +1,4 @@
 import { Category } from '../services/category';
-// import CurrentType from '../store/currentType';
 
 export class AddEditCategories {
     constructor(mode) {

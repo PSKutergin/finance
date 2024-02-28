@@ -1,4 +1,3 @@
-// import CurrentType from "../store/currentType";
 import User from "../store/user";
 import { Balance } from '../services/balance'
 

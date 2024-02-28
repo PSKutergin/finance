@@ -9,7 +9,9 @@ export class Balance {
     init() {
         this.filterBtns = document.querySelectorAll('.content__nav-item');
         this.dateIntervalContainer = document.getElementById('dateInterval');
+        this.contentTable = document.querySelector('.content__table');
         this.contentTableBody = document.querySelector('.content__table-body');
+        this.contentNoOperations = document.querySelector('.content__no-operations');
         this.popup = document.querySelector('.content__popup');
         this.createIncomeBtn = document.querySelector('.content__button-income');
         this.createExpenseBtn = document.querySelector('.content__button-expense');
@@ -63,34 +65,34 @@ export class Balance {
     }
 
     renderTable(data) {
-        if (this.contentTableBody) this.contentTableBody.innerHTML = '';
+        if (this.contentTable && this.contentNoOperations) {
+            if (data.length) {
+                this.contentNoOperations.classList.add('hide');
+                this.contentTable.classList.remove('hide');
+                this.contentTableBody.innerHTML = '';
 
-        if (data.length && this.contentTableBody) {
-            console.log(data);
-            data.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach((item, index) => {
-                this.contentTableBody.insertAdjacentHTML('beforeend', `
-                    <tr data-id="${item.id}">
-                        <td class="content__table-body-item">${index + 1}</td>
-                        <td class="content__table-body-item" style="color: ${item.type === 'income' ? '#198754' : '#dc3545'};">${item.type === 'income' ? 'доход' : 'расход'}</td>
-                        <td class="content__table-body-item">${item.category}</td>
-                        <td class="content__table-body-item">${item.amount}$</td>
-                        <td class="content__table-body-item">${formatDate(item.date)}</td>
-                        <td class="content__table-body-item">${item.comment}</td>
-                        <td class="content__table-body-item">
-                            <button class="btn-delete"><img src="/images/delete.svg" alt="delete"></button>
-                            <button class="btn-edit"><img src="/images/edit.svg" alt="edit"></button>
-                        </td>
-                    </tr>
-                `)
-            })
+                data.sort((a, b) => new Date(a.date) - new Date(b.date)).forEach((item, index) => {
+                    this.contentTableBody.insertAdjacentHTML('beforeend', `
+                        <tr data-id="${item.id}">
+                            <td class="content__table-body-item">${index + 1}</td>
+                            <td class="content__table-body-item" style="color: ${item.type === 'income' ? '#198754' : '#dc3545'};">${item.type === 'income' ? 'доход' : 'расход'}</td>
+                            <td class="content__table-body-item">${item.category}</td>
+                            <td class="content__table-body-item">${item.amount}$</td>
+                            <td class="content__table-body-item">${formatDate(item.date)}</td>
+                            <td class="content__table-body-item">${item.comment}</td>
+                            <td class="content__table-body-item">
+                                <button class="btn-delete"><img src="/images/delete.svg" alt="delete"></button>
+                                <button class="btn-edit"><img src="/images/edit.svg" alt="edit"></button>
+                            </td>
+                        </tr>
+                    `)
+                })
 
-            this.initBtns();
-        } else {
-            this.contentTableBody.insertAdjacentHTML('beforeend', `
-                <tr>
-                    <td class="content__table-body-item" colspan="7">За выбранный период нет операций. Выберите другой период</td>
-                </tr>
-            `)
+                this.initBtns();
+            } else {
+                this.contentNoOperations.classList.remove('hide');
+                this.contentTable.classList.add('hide');
+            }
         }
     }
 
@@ -106,7 +108,9 @@ export class Balance {
 
         this.editCategoriesBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
-                window.location.hash = `#/edit-operation/1`
+                const id = e.target.closest('tr').dataset.id
+                console.log(id);
+                window.location.hash = `#/edit-operation/${id}`
             })
         })
     }
