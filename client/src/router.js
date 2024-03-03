@@ -106,15 +106,12 @@ export class Router {
         });
         const token = Auth.getToken(Auth.accessTokenKey);
 
-        console.log(urlRoute);
-
         if (!newRoute || urlRoute === '#/') {
             window.location.hash = '#/login';
             return;
         };
 
         if (token && urlRoute === '#/signup') {
-            console.log('token', token);
             window.location.hash = '#/main';
             return;
         }

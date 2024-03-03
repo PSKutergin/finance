@@ -2,14 +2,17 @@
     <h1 class="content__title"></h1>
     <form class="content__form">
         <section class="content__input-wrapper">
-            <select name="type" class="content__select">
+            <select name="type" class="content__select" id="type">
                 <option class="content__select_option" value="" selected disabled>Тип...</option>
                 <option value="income">Доход</option>
                 <option value="expense">Расход</option>
             </select>
-            <input type="text" class="content__input" name="category" placeholder="Категория...">
-            <input type="text" class="content__input" name="amount" placeholder="Сумма в $...">
-            <input type="text" class="content__input" name="date" placeholder="Дата...">
+            <select name="category_id" class="content__select" id="category_id">
+                <option class="content__select_option" value="" selected disabled>Категория...</option>
+            </select>
+            <input type="text" class="content__input" name="amount" id="amount" placeholder="Сумма в $...">
+            <input type="text" class="content__input" name="date" id="date" placeholder="Дата...">
+            <div class="content__calendar" id="calendar"></div>
             <input type="text" class="content__input" name="comment" placeholder="Комментарий...">
         </section>
         <section class="content__buttons-wrapper">

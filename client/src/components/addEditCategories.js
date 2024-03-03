@@ -9,7 +9,6 @@ export class AddEditCategories {
         this.valueInput = null;
         this.contentBtn = null;
         this.contentBtnCnl = null;
-        this.popupBtnDelete = null;
         this.title = '';
         this.textBtn = '';
         this.init();
@@ -65,11 +64,6 @@ export class AddEditCategories {
 
         this.contentBtnCnl.addEventListener('click', () => {
             window.location.hash = `#/categories-${this.currentType}`;
-        })
-
-        this.popupBtnDelete.addEventListener('click', () => {
-            console.log(this.currentType, this.idCategory);
-            this.deleteCategory();
         })
     }
 

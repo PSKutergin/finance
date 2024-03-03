@@ -85,7 +85,7 @@ export class Sidebar {
         try {
             const res = await Balance.getBalance()
 
-            this.balanceElem.textContent = `${res.data.balance}$`
+            this.balanceElem.textContent = `${res.data.balance.toLocaleString()} $`
         } catch (error) {
             console.log(error);
         }

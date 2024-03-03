@@ -21,16 +21,14 @@ export class Balance {
                 btn.addEventListener('click', (e) => {
                     e.target.classList.add('active');
 
-                    const query = e.target.id;
-                    if (query === 'interval') {
+                    this.query = e.target.id;
+                    if (this.query === 'interval') {
                         this.isOpenDateIntervalContainer()
                         console.log('interval');
                     } else {
                         this.isCloseDateIntervalContainer();
-                        this.getOperations(query)
+                        this.getOperations(this.query)
                     }
-
-
 
                     this.filterBtns.forEach(item => {
                         if (item !== e.target) {
@@ -58,6 +56,11 @@ export class Balance {
                 if (e.target.closest('.popup__btn-cancel')) {
                     this.popup.classList.remove('open');
                 }
+
+                if (e.target.closest('.popup__btn-delete')) {
+                    this.deleteOperation();
+                    this.popup.classList.remove('open');
+                }
             })
         }
 
@@ -77,7 +80,7 @@ export class Balance {
                             <td class="content__table-body-item">${index + 1}</td>
                             <td class="content__table-body-item" style="color: ${item.type === 'income' ? '#198754' : '#dc3545'};">${item.type === 'income' ? 'доход' : 'расход'}</td>
                             <td class="content__table-body-item">${item.category}</td>
-                            <td class="content__table-body-item">${item.amount}$</td>
+                            <td class="content__table-body-item">${item.amount.toLocaleString()}&nbsp;$</td>
                             <td class="content__table-body-item">${formatDate(item.date)}</td>
                             <td class="content__table-body-item">${item.comment}</td>
                             <td class="content__table-body-item">
@@ -102,29 +105,52 @@ export class Balance {
 
         this.deleteCategoriesBtns.forEach(btn => {
             btn.addEventListener('click', (e) => {
+                this.idCategory = e.target.closest('tr').dataset.id
                 this.popup.classList.add('open');
             })
         })
 
         this.editCategoriesBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const id = e.target.closest('tr').dataset.id
-                console.log(id);
-                window.location.hash = `#/edit-operation/${id}`
+            btn.addEventListener('click', async (e) => {
+                try {
+                    const id = e.target.closest('tr').dataset.id
+                    await Operation.getOperation(id).then(respons => {
+                        window.currentType.setType(respons.data.type);
+                        window.location.hash = `#/edit-operation/${id}`
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
             })
         })
     }
 
     async getOperations(interval = null, dateFrom = null, dateTo = null) {
-        let respons
-        if (interval && dateFrom && dateTo) {
-            respons = await Operation.getOperations(interval, dateFrom, dateTo);
-        } else if (interval && !dateFrom && !dateTo) {
-            respons = await Operation.getOperations(interval);
-        } else {
-            respons = await Operation.getOperations();
+        try {
+            let respons
+            if (interval && dateFrom && dateTo) {
+                respons = await Operation.getOperations(interval, dateFrom, dateTo);
+            } else if (interval && !dateFrom && !dateTo) {
+                respons = await Operation.getOperations(interval);
+            } else {
+                respons = await Operation.getOperations();
+            }
+            this.renderTable(respons.data);
+        } catch (error) {
+            console.log(error);
         }
-        this.renderTable(respons.data);
+
+    }
+
+    async deleteOperation() {
+        try {
+            const respons = await Operation.deleteOperation(this.idCategory);
+            if (respons.status === 200) {
+                this.getOperations(this.query);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     isOpenDateIntervalContainer() {
