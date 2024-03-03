@@ -10,14 +10,10 @@ export class AddEditOperations {
         this.currentType = null;
         this.contentTitle = null;
         this.contentBtn = null;
-        this.currentMonth = null;
-        this.currentYear = null;
         this.init();
     }
 
     init() {
-        this.currentMonth = new Date().getMonth() + 1;
-        this.currentYear = new Date().getFullYear();
         this.currentType = window.currentType.getType();
         this.contentTitle = document.querySelector('.content__title');
         this.contentBtn = document.querySelector('.content__button');

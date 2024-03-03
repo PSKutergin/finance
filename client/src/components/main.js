@@ -1,5 +1,6 @@
 import pieChart from '../modules/charts';
 import { Operation } from "../services/operation";
+import Calendar from "./calendar";
 
 export class Main {
     filterBtns = null
@@ -20,6 +21,10 @@ export class Main {
         this.noExpense = document.getElementById('no-expense');
         this.incomeChartElement = document.getElementById('pie-chart-income');
         this.expenseChartElement = document.getElementById('pie-chart-expense');
+        this.inputDateFrom = document.getElementById('dateFrom');
+        this.inputDateTo = document.getElementById('dateTo');
+        this.calendarBoxFrom = document.getElementById('calendarFrom');
+        this.calendarBoxTo = document.getElementById('calendarTo');
 
         if (this.filterBtns) {
             this.filterBtns.forEach(btn => {
@@ -49,6 +54,12 @@ export class Main {
             this.expenseChart = pieChart(this.expenseChartElement, 'Расходы', [], []);
         }
 
+        if (this.inputDateFrom && this.inputDateTo && this.calendarBoxFrom && this.calendarBoxTo) {
+            this.currentCalendarFrom = new Calendar(this.calendarBoxFrom, this.inputDateFrom);
+            this.currentCalendarTo = new Calendar(this.calendarBoxTo, this.inputDateTo);
+            this.initInputs();
+        }
+
         this.getOperations(this.query)
     }
 
@@ -58,6 +69,24 @@ export class Main {
 
     isCloseDateIntervalContainer() {
         this.dateIntervalContainer.classList.remove('open');
+    }
+
+    initInputs() {
+        this.inputDateFrom.addEventListener('click', (e) => {
+            this.currentCalendarFrom.showCalendar();
+        })
+        this.inputDateTo.addEventListener('click', (e) => {
+            this.currentCalendarTo.showCalendar();
+        })
+
+        document.addEventListener('click', (e) => {
+            if (e.target !== this.inputDateFrom && !e.target.closest('#prevMonth') && !e.target.closest('#nextMonth')) {
+                this.calendarBoxFrom.classList.remove('open');
+            }
+            if (e.target !== this.inputDateTo && !e.target.closest('#prevMonth') && !e.target.closest('#nextMonth')) {
+                this.calendarBoxTo.classList.remove('open');
+            }
+        });
     }
 
     async getOperations(interval = null, dateFrom = null, dateTo = null) {

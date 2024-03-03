@@ -1,5 +1,6 @@
 import { Operation } from "../services/operation";
 import { formatDate } from "../helpers/helpers";
+import Calendar from "./calendar";
 
 export class Balance {
     constructor() {
@@ -15,6 +16,10 @@ export class Balance {
         this.popup = document.querySelector('.content__popup');
         this.createIncomeBtn = document.querySelector('.content__button-income');
         this.createExpenseBtn = document.querySelector('.content__button-expense');
+        this.inputDateFrom = document.getElementById('dateFrom');
+        this.inputDateTo = document.getElementById('dateTo');
+        this.calendarBoxFrom = document.getElementById('calendarFrom');
+        this.calendarBoxTo = document.getElementById('calendarTo');
 
         if (this.filterBtns) {
             this.filterBtns.forEach(btn => {
@@ -64,7 +69,38 @@ export class Balance {
             })
         }
 
+        if (this.inputDateFrom && this.inputDateTo && this.calendarBoxFrom && this.calendarBoxTo) {
+            this.currentCalendarFrom = new Calendar(this.calendarBoxFrom, this.inputDateFrom);
+            this.currentCalendarTo = new Calendar(this.calendarBoxTo, this.inputDateTo);
+            this.initInputs();
+        }
+
         this.getOperations()
+    }
+
+    initInputs() {
+        this.inputDateFrom.addEventListener('click', (e) => {
+            this.currentCalendarFrom.showCalendar();
+        })
+        this.inputDateTo.addEventListener('click', (e) => {
+            this.currentCalendarTo.showCalendar();
+        })
+
+        document.addEventListener('click', (e) => {
+            if (e.target !== this.inputDateFrom && !e.target.closest('#prevMonth') && !e.target.closest('#nextMonth')) {
+                this.calendarBoxFrom.classList.remove('open');
+            }
+            if (e.target !== this.inputDateTo && !e.target.closest('#prevMonth') && !e.target.closest('#nextMonth')) {
+                this.calendarBoxTo.classList.remove('open');
+            }
+        });
+
+        this.inputDateFrom.addEventListener('change', (e) => {
+            console.log(e.target.value);
+        })
+        this.inputDateTo.addEventListener('change', (e) => {
+            console.log(e.target.value);
+        })
     }
 
     renderTable(data) {
