@@ -21,12 +21,18 @@
         </section>
     </nav>
     <section class="content__chart">
-        <section class="chart">
+        <section class="chart" id="chart-income">
             <canvas id="pie-chart-income" class="pie-chart"></canvas>
         </section>
+        <section class="content__no-income hide" id="no-income">
+            За выбранный период нет доходов. Выберите другой период!
+        </section>
         <div class="content__chart-divider"></div>
-        <section class="chart">
+        <section class="chart" id="chart-expense">
             <canvas id="pie-chart-expense" class="pie-chart"></canvas>
+        </section>
+        <section class="content__no-expense hide" id="no-expense">
+            За выбранный период нет расходов. Выберите другий период!
         </section>
     </section>
 </section>

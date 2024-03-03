@@ -55,7 +55,7 @@ const pieChart = (element, title, categories, values) => {
         return config
     };
 
-    new Chart(element, setConfig(data))
+    return new Chart(element, setConfig(data))
 }
 
 export default pieChart
