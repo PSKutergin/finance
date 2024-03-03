@@ -87,6 +87,63 @@ td {
   }
 }
 
+.content__calendar {
+  display: none;
+  position: absolute;
+  top: 134px;
+  right: 0;
+  z-index: 1;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 10px;
+
+  &.open {
+    display: block;
+  }
+
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+
+  table {
+    width: 100%;
+
+    th {
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    td {
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+    }
+  }
+}
+
 @import "./form.scss";
 @import "./layout.scss";
 @import "./main.scss";
