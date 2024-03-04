@@ -1,4 +1,4 @@
-import { CurrentType } from "../store/currentType";
+import CurrentType from "../store/currentType";
 
 export class Categories {
     constructor() {
@@ -24,14 +24,19 @@ export class Categories {
             })
         })
 
-        this.createBtn.addEventListener('click', (e) => {
-            window.location.hash = `#/new-categories`
-        })
+        if (this.createBtn) {
+            this.createBtn.addEventListener('click', (e) => {
+                window.location.hash = `#/new-categories`
+            })
+        }
 
-        this.popup.addEventListener('click', (e) => {
-            if (e.target.closest('.popup__btn-cancel')) {
-                this.popup.classList.remove('open');
-            }
-        })
+        if (this.popup) {
+            this.popup.addEventListener('click', (e) => {
+                if (e.target.closest('.popup__btn-cancel')) {
+                    this.popup.classList.remove('open');
+                }
+            })
+        }
+
     }
 }

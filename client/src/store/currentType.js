@@ -1,7 +1,5 @@
-export class CurrentType {
-    constructor() {
-        this.type = null;
-    }
+export default class CurrentType {
+    static type = 'income';
 
     static setType(type) {
         this.type = type;

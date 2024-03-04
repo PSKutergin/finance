@@ -1,4 +1,4 @@
-import { Auth } from '../services/auth.js';
+import User from "../store/user";
 
 export class Form {
     constructor(page) {
@@ -102,27 +102,22 @@ export class Form {
         return isValid
     }
 
-    processForm() {
+    async processForm() {
         if (this.validateForm()) {
             const email = this.fields.find(item => item.name === 'email').element.value;
             const password = this.fields.find(item => item.name === 'password').element.value;
-            let success
 
             if (this.page === 'signup') {
                 const fullName = this.fields.find(item => item.name === 'user').element.value;
-                success = Auth.signup({ email, password, fullName });
-                if (success.success) {
-                    window.location.hash = '#/login';
-                    return
-                }
+                const lastName = fullName.split(' ')[0];
+                const name = fullName.split(' ')[1];
+                const passwordRepeat = this.fields.find(item => item.name === 'password-repeat').element.value;
+
+                User.registration(name, lastName, email, password, passwordRepeat);
             } else {
-                success = Auth.login({ email, password });
-                if (success.success) {
-                    window.location.hash = '#/main';
-                    return
-                }
+                User.login(email, password);
             }
-            this.showError(success.error);
+
         }
     }
 
@@ -132,12 +127,5 @@ export class Form {
 
     inputSuccess(element) {
         element.classList.remove('error');
-    }
-
-    showError(text) {
-        this.errorElement = document.getElementById('error');
-        this.errorElement.innerText = text;
-        this.errorElement.classList.add('active');
-        setTimeout(() => this.errorElement.classList.remove('active'), 3000);
     }
 }

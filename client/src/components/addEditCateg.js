@@ -1,4 +1,4 @@
-import { CurrentType } from '../store/currentType';
+import CurrentType from '../store/currentType';
 
 export class AddEditCateg {
     constructor(mode) {

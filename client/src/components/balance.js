@@ -1,4 +1,4 @@
-import { CurrentType } from '../store/currentType';
+import CurrentType from '../store/currentType';
 
 export class Balance {
     constructor() {
@@ -36,10 +36,12 @@ export class Balance {
             })
         })
 
-        this.popup.addEventListener('click', (e) => {
-            if (e.target.closest('.popup__btn-cancel')) {
-                this.popup.classList.remove('open');
-            }
-        })
+        if (this.popup) {
+            this.popup.addEventListener('click', (e) => {
+                if (e.target.closest('.popup__btn-cancel')) {
+                    this.popup.classList.remove('open');
+                }
+            })
+        }
     }
 }

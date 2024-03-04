@@ -1,3 +1,4 @@
+import User from './store/user.js';
 import { Auth } from './services/auth.js';
 import { Form } from './components/form.js';
 import { Sidebar } from './components/sidebar.js';
@@ -99,53 +100,52 @@ export class Router {
 
     async openRoute() {
         const urlRoute = window.location.hash.split('?')[0];
-
-        if (urlRoute === '#/logout') {
-            Auth.logout();
-            window.location.hash = '#/login';
-            return;
-        }
-
         const newRoute = this.routes.find(item => item.route === urlRoute);
-        const userInfo = Auth.getUserInfo();
+        const token = Auth.getToken(Auth.accessTokenKey);
 
         if (!newRoute || urlRoute === '#/') {
             window.location.hash = '#/login';
             return;
         };
 
+        if (token && urlRoute === '#/signup') {
+            console.log('token', token);
+            window.location.hash = '#/main';
+            return;
+        }
+
         if (urlRoute === '#/signup' || urlRoute === '#/login') {
             this.fetchApp(newRoute)
             return;
         }
 
-        if (userInfo) {
+        if (token) {
             this.fetchApp(this.routes.find(item => item.route === '#/'), newRoute);
             this.fetchPages(newRoute);
         } else {
+            User.removeUser();
+            Auth.removeTokens();
             window.location.hash = '#/login';
         }
     }
 
-    fetchApp(route, internalRoute = null) {
-        fetch(route.template).then(async (res) => {
-            this.appElement.innerHTML = await res.text()
-            route.load();
-            if (internalRoute) {
-                this.fetchPages(internalRoute);
-            }
-        })
+    async fetchApp(route, internalRoute = null) {
+        const res = await fetch(route.template);
+        this.appElement.innerHTML = await res.text()
+        await route.load();
+        if (internalRoute) {
+            this.fetchPages(internalRoute);
+        }
     }
 
-    fetchPages(route) {
+    async fetchPages(route) {
         this.contentElement = document.getElementById('content');
         if (!this.contentElement) {
             return;
         }
-        fetch(route.template).then(async (res) => {
-            this.contentElement.innerHTML = await res.text()
-            route.load();
-        })
+        const res = await fetch(route.template);
+        this.contentElement.innerHTML = await res.text()
+        await route.load();
     }
 
 
