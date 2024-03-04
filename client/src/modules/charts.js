@@ -1,11 +1,23 @@
 import Chart from 'chart.js/auto';
 
+const Utils = {
+    CHART_COLORS: {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)',
+    }
+}
+
 const pieChart = (element, title, categories, values) => {
 
     const data = {
         labels: categories,
         datasets: [{
-            backgroundColor: ["#dc3545", "#fd7e14", "#ffc107", "#20c997", "#0d6efd"],
+            backgroundColor: Object.values(Utils.CHART_COLORS),
             data: values
         }]
     }
