@@ -54,6 +54,7 @@ export default class Calendar {
             if (target.tagName === 'TD' && target.innerHTML !== '') {
                 const selectedDate = this.currentYear + '-' + this.currentMonth.toString().padStart(2, '0') + '-' + target.innerHTML.padStart(2, '0');
                 this.inputDate.value = selectedDate;
+                this.inputDate.dispatchEvent(new Event('change'));
                 this.calendar.classList.remove('open');
             }
         });

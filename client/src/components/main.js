@@ -7,6 +7,8 @@ export class Main {
     dateIntervalContainer = null
 
     constructor() {
+        this.dateFrom = null;
+        this.dateTo = null;
         this.incomeChart = null
         this.expenseChart = null
         this.init();
@@ -21,6 +23,7 @@ export class Main {
         this.noExpense = document.getElementById('no-expense');
         this.incomeChartElement = document.getElementById('pie-chart-income');
         this.expenseChartElement = document.getElementById('pie-chart-expense');
+        this.errorMessage = document.querySelector('.date-error');
         this.inputDateFrom = document.getElementById('dateFrom');
         this.inputDateTo = document.getElementById('dateTo');
         this.calendarBoxFrom = document.getElementById('calendarFrom');
@@ -34,7 +37,10 @@ export class Main {
                     this.query = e.target.id;
                     if (this.query === 'interval') {
                         this.isOpenDateIntervalContainer()
-                        console.log('interval');
+                        this.chartExpense.classList.add('hide');
+                        this.noExpense.classList.remove('hide');
+                        this.chartIncome.classList.add('hide');
+                        this.noIncome.classList.remove('hide');
                     } else {
                         this.isCloseDateIntervalContainer();
                         this.getOperations(this.query)
@@ -69,13 +75,37 @@ export class Main {
 
     isCloseDateIntervalContainer() {
         this.dateIntervalContainer.classList.remove('open');
+        this.inputDateFrom.value = '';
+        this.inputDateTo.value = '';
     }
 
     initInputs() {
-        this.inputDateFrom.addEventListener('click', (e) => {
+        this.handleInput = (e) => {
+            this.inputDateFrom.removeEventListener('change', this.handleInput)
+            this.inputDateTo.removeEventListener('change', this.handleInput)
+
+            if (e.target.id === 'dateFrom') this.dateFrom = e.target.value;
+            if (e.target.id === 'dateTo') this.dateTo = e.target.value;
+
+            if (this.dateFrom && this.dateTo) {
+                if (this.dateFrom <= this.dateTo) {
+                    this.getOperations(this.query, this.dateFrom, this.dateTo);
+                } else {
+                    this.showErrorDate()
+                }
+            }
+        }
+
+        this.inputDateFrom.addEventListener('click', () => {
+            this.hideErrorDate();
+            this.inputDateFrom.removeEventListener('change', this.handleInput)
+            this.inputDateFrom.addEventListener('change', this.handleInput)
             this.currentCalendarFrom.showCalendar();
         })
-        this.inputDateTo.addEventListener('click', (e) => {
+        this.inputDateTo.addEventListener('click', () => {
+            this.hideErrorDate();
+            this.inputDateTo.removeEventListener('change', this.handleInput)
+            this.inputDateTo.addEventListener('change', this.handleInput)
             this.currentCalendarTo.showCalendar();
         })
 
@@ -144,5 +174,17 @@ export class Main {
                 this.noExpense.classList.remove('hide');
             }
         }
+    }
+
+    showErrorDate() {
+        this.errorMessage.classList.remove('hide');
+        this.inputDateFrom.classList.add('error');
+        this.inputDateTo.classList.add('error');
+    }
+
+    hideErrorDate() {
+        this.errorMessage.classList.add('hide');
+        this.inputDateFrom.classList.remove('error');
+        this.inputDateTo.classList.remove('error');
     }
 }

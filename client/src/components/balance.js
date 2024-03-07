@@ -4,6 +4,8 @@ import Calendar from "./calendar";
 
 export class Balance {
     constructor() {
+        this.dateFrom = null;
+        this.dateTo = null;
         this.init();
     }
 
@@ -16,6 +18,7 @@ export class Balance {
         this.popup = document.querySelector('.content__popup');
         this.createIncomeBtn = document.querySelector('.content__button-income');
         this.createExpenseBtn = document.querySelector('.content__button-expense');
+        this.errorMessage = document.querySelector('.date-error');
         this.inputDateFrom = document.getElementById('dateFrom');
         this.inputDateTo = document.getElementById('dateTo');
         this.calendarBoxFrom = document.getElementById('calendarFrom');
@@ -29,7 +32,9 @@ export class Balance {
                     this.query = e.target.id;
                     if (this.query === 'interval') {
                         this.isOpenDateIntervalContainer()
-                        console.log('interval');
+                        this.contentTableBody.innerHTML = '';
+                        this.contentNoOperations.classList.remove('hide');
+                        this.contentTable.classList.add('hide');
                     } else {
                         this.isCloseDateIntervalContainer();
                         this.getOperations(this.query)
@@ -69,7 +74,7 @@ export class Balance {
             })
         }
 
-        if (this.inputDateFrom && this.inputDateTo && this.calendarBoxFrom && this.calendarBoxTo) {
+        if (this.inputDateFrom && this.inputDateTo && this.calendarBoxFrom && this.calendarBoxTo && this.errorMessage) {
             this.currentCalendarFrom = new Calendar(this.calendarBoxFrom, this.inputDateFrom);
             this.currentCalendarTo = new Calendar(this.calendarBoxTo, this.inputDateTo);
             this.initInputs();
@@ -79,10 +84,32 @@ export class Balance {
     }
 
     initInputs() {
-        this.inputDateFrom.addEventListener('click', (e) => {
+        this.handleInput = (e) => {
+            this.inputDateFrom.removeEventListener('change', this.handleInput)
+            this.inputDateTo.removeEventListener('change', this.handleInput)
+
+            if (e.target.id === 'dateFrom') this.dateFrom = e.target.value;
+            if (e.target.id === 'dateTo') this.dateTo = e.target.value;
+
+            if (this.dateFrom && this.dateTo) {
+                if (this.dateFrom <= this.dateTo) {
+                    this.getOperations(this.query, this.dateFrom, this.dateTo);
+                } else {
+                    this.showErrorDate()
+                }
+            }
+        }
+
+        this.inputDateFrom.addEventListener('click', () => {
+            this.hideErrorDate();
+            this.inputDateFrom.removeEventListener('change', this.handleInput)
+            this.inputDateFrom.addEventListener('change', this.handleInput)
             this.currentCalendarFrom.showCalendar();
         })
-        this.inputDateTo.addEventListener('click', (e) => {
+        this.inputDateTo.addEventListener('click', () => {
+            this.hideErrorDate();
+            this.inputDateTo.removeEventListener('change', this.handleInput)
+            this.inputDateTo.addEventListener('change', this.handleInput)
             this.currentCalendarTo.showCalendar();
         })
 
@@ -94,13 +121,6 @@ export class Balance {
                 this.calendarBoxTo.classList.remove('open');
             }
         });
-
-        this.inputDateFrom.addEventListener('change', (e) => {
-            console.log(e.target.value);
-        })
-        this.inputDateTo.addEventListener('change', (e) => {
-            console.log(e.target.value);
-        })
     }
 
     renderTable(data) {
@@ -195,5 +215,19 @@ export class Balance {
 
     isCloseDateIntervalContainer() {
         this.dateIntervalContainer.classList.remove('open');
+        this.inputDateFrom.value = '';
+        this.inputDateTo.value = '';
+    }
+
+    showErrorDate() {
+        this.errorMessage.classList.remove('hide');
+        this.inputDateFrom.classList.add('error');
+        this.inputDateTo.classList.add('error');
+    }
+
+    hideErrorDate() {
+        this.errorMessage.classList.add('hide');
+        this.inputDateFrom.classList.remove('error');
+        this.inputDateTo.classList.remove('error');
     }
 }
