@@ -7,9 +7,17 @@ export default class Categories {
         this.init();
     }
 
-    init() {
-        this.getCategoriesIncomeFromApi();
-        this.getCategoriesExpenseFromApi();
+    async init() {
+        try {
+            const [incomeRes, expenseRes] = await Promise.all([
+                Category.getCategories("income"),
+                Category.getCategories("expense")
+            ]);
+            this.categoriesIncome = incomeRes.data;
+            this.categoriesExpense = expenseRes.data;
+        } catch (error) {
+            console.error("Ошибка при загрузке категорий:", error);
+        }
     }
 
     getCategories(type) {
@@ -18,17 +26,5 @@ export default class Categories {
         } else {
             return this.categoriesExpense
         }
-    }
-
-    getCategoriesIncomeFromApi() {
-        Category.getCategories("income").then(res => {
-            this.categoriesIncome = res.data
-        })
-    }
-
-    getCategoriesExpenseFromApi() {
-        Category.getCategories("expense").then(res => {
-            this.categoriesExpense = res.data
-        })
     }
 }
