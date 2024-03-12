@@ -30,6 +30,10 @@
     margin-top: 40px;
     width: 100%;
     table-layout: auto;
+
+    &.hide {
+      display: none;
+    }
   }
 
   &__table-head-item {
@@ -74,6 +78,18 @@
       justify-content: center;
       align-items: center;
       gap: 10px;
+    }
+  }
+
+  &__no-operations {
+    padding: 30px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 23px;
+    color: #6c757d;
+
+    &.hide {
+      display: none;
     }
   }
 }

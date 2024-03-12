@@ -8,6 +8,10 @@
   gap: 10px;
 }
 
+.content__calendar-wrapper {
+  position: relative;
+}
+
 .content__select,
 .content__input {
   width: 100%;
@@ -18,6 +22,7 @@
   padding: 7px 16px;
   outline: none;
   color: #000;
+  cursor: pointer;
 
   &::placeholder {
     color: #6c757d;

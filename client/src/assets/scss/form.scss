@@ -7,6 +7,7 @@
   align-items: center;
   justify-content: center;
   gap: 60px;
+  overflow: hidden;
 
   &__logo {
     width: 171px;
@@ -119,10 +120,9 @@
   font-size: 15px;
   line-height: 23px;
   background: #f8d7da;
-  transform: translateX(200%);
-  transition: all 1s ease;
+  display: none;
 }
 
 .error-message.active {
-  transform: translateX(0);
+  display: block;
 }

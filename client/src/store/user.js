@@ -2,6 +2,7 @@ import { Auth } from "../services/auth";
 
 export default class User {
     static userKey = 'user';
+    static isRefreshing = false;
 
     static setUser(user) {
         localStorage.setItem(this.userKey, JSON.stringify(user));
@@ -17,6 +18,10 @@ export default class User {
 
     static getFullName() {
         const user = this.getUser();
+        if (!user) {
+            Auth.removeTokens();
+            window.location.hash = '#/login';
+        }
         return `${user.name} ${user.lastName}`
     }
 
@@ -63,14 +68,19 @@ export default class User {
 
     }
 
-    // TODO: надо понять в какой момент вызывать данный метод
     static async checkAuth() {
         try {
             const refreshToken = Auth.getToken(Auth.refreshTokenKey);
-            const response = await Auth.refresh(refreshToken);
-            const tokens = response.data.tokens;
 
-            Auth.setTokens(tokens.accessToken, tokens.refreshToken);
+            if (!this.isRefreshing) { // проверяем, не происходит ли уже обновление
+                this.isRefreshing = true; // устанавливаем флаг обновления
+
+                const response = await Auth.refresh(refreshToken);
+                const tokens = response.data.tokens;
+                Auth.setTokens(tokens.accessToken, tokens.refreshToken);
+
+                this.isRefreshing = false; // сбрасываем флаг обновления после успешного обновления
+            }
         } catch (error) {
             this.removeUser();
             Auth.removeTokens();

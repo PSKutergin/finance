@@ -1,5 +1,5 @@
-import CurrentType from "../store/currentType";
 import User from "../store/user";
+import { Balance } from '../services/balance'
 
 export class Sidebar {
     constructor(page) {
@@ -14,12 +14,13 @@ export class Sidebar {
         this.navItems = document.querySelectorAll('.sidebar__item');
         this.navItemsSub = document.querySelectorAll('.sidebar__sublist-item');
         this.categoriesItem = document.querySelector('.sidebar__item--categories');
+        this.balanceElem = document.getElementById('balance-value')
         this.btnLogOut = document.querySelector('.sidebar__user-logout');
 
         this.userName = document.getElementById('userName');
         this.userName.textContent = User.getFullName();
 
-        const currentType = CurrentType.getType();
+        const currentType = window.currentType.getType();
 
         this.navItemsSub.forEach(item => {
             if (item.dataset.hash === this.page) item.classList.add('active');
@@ -38,7 +39,7 @@ export class Sidebar {
             else item.classList.remove('active');
         });
 
-        if (this.page.includes('categories')) {
+        if (this.page.includes('categories') || this.page.includes('operation')) {
             this.categoriesItem.classList.add('active');
             this.navSubList.classList.add('open');
         } else {
@@ -61,7 +62,7 @@ export class Sidebar {
 
             if (e.target.closest('.sidebar__sublist-item')) {
                 const link = e.target.closest('.sidebar__sublist-item');
-                CurrentType.setType(link.dataset.hash.split('-')[1]);
+                window.currentType.setType(link.dataset.hash.split('-')[1]);
                 window.location.hash = `#/${link.dataset.hash}`
             }
         })
@@ -76,5 +77,17 @@ export class Sidebar {
                 window.location.hash = '#/login';
             }
         })
+
+        this.getBalanceFromApi();
+    }
+
+    async getBalanceFromApi() {
+        try {
+            const res = await Balance.getBalance()
+
+            this.balanceElem.textContent = `${res.data.balance.toLocaleString()} $`
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
